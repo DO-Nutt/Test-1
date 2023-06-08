@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;
     public GameObject projectilePrefab;
     public float projectileSpeed = 10f;
+    public float projectileOffset = 1f; // Offset distance for projectile spawn position
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +18,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(0))
         {
             shootProjectile();
         }
@@ -40,8 +41,11 @@ public class PlayerController : MonoBehaviour
 
     private void shootProjectile()
     {
-        // Instantiate the projectile
-        GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
+        // Calculate the spawn position for the projectile with offset
+        Vector3 spawnPosition = transform.position + transform.forward * projectileOffset;
+
+        // Instantiate the projectile at the spawn position
+        GameObject projectile = Instantiate(projectilePrefab, spawnPosition, transform.rotation);
 
         // Get the Rigidbody component of the projectile
         Rigidbody projectileRigidbody = projectile.GetComponent<Rigidbody>();
