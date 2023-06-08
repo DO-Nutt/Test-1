@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
             shootProjectile();
         }
 
+        RotatePlayerTowardsMouse();
+
         // Get input axes for movement
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
@@ -49,5 +51,21 @@ public class PlayerController : MonoBehaviour
 
         // Destroy the projectile after a certain amount of time
         Destroy(projectile, 3f);
+    }
+
+    private void RotatePlayerTowardsMouse()
+    {
+        // Get the mouse position in screen coordinates
+        Vector3 mousePositionScreen = Input.mousePosition;
+
+        // Convert the screen coordinates to world coordinates
+        Vector3 mousePositionWorld = Camera.main.ScreenToWorldPoint(new Vector3(mousePositionScreen.x, mousePositionScreen.y, transform.position.z));
+
+        // Calculate the direction from the player to the mouse position
+        Vector3 direction = mousePositionWorld - transform.position;
+        direction.y = 0f; // Ensure the player doesn't tilt up or down
+
+        // Rotate the player to face the direction
+        transform.rotation = Quaternion.LookRotation(direction);
     }
 }
