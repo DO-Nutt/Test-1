@@ -18,11 +18,13 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Shoots a projectile with left click
         if (Input.GetMouseButtonDown(0))
         {
             shootProjectile();
         }
 
+        //Constalty checks to rotate player based on cursor position
         RotatePlayerTowardsMouse();
 
         // Get input axes for movement
